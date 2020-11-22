@@ -916,8 +916,12 @@ static int parse_playlist(HLSContext *c, const char *url,
                                 (url_start =  strstr(url,"https://"))) {
                         strncpy(io_url, url, url_start - url);
                     }
-                    av_strlcat(io_url, tmp_str, sizeof(io_url));
-                    seg->url = av_strdup(io_url);
+                    if(strstr(tmp_str, io_url) == tmp_str) {
+                        seg->url = av_strdup(tmp_str);
+                    } else {
+                        av_strlcat(io_url, tmp_str, sizeof(io_url));
+                        seg->url = av_strdup(io_url);
+                    }
                     memset(io_url, 0, sizeof(io_url));
                 } else {
                     seg->url = av_strdup(tmp_str);

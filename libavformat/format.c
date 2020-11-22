@@ -158,6 +158,8 @@ AVInputFormat *av_probe_input_format3(AVProbeData *pd, int is_opened,
     }
 
     while ((fmt1 = av_demuxer_iterate(&i))) {
+        if (!strcmp(fmt1->name, "png_pipe")) 
+            continue;
         if (!is_opened == !(fmt1->flags & AVFMT_NOFILE) && strcmp(fmt1->name, "image2"))
             continue;
         score = 0;

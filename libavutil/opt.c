@@ -1298,6 +1298,8 @@ void av_opt_set_defaults2(void *s, int mask, int flags)
 {
     const AVOption *opt = NULL;
     while ((opt = av_opt_next(s, opt))) {
+        if (opt->offset == 0)
+            continue;
         void *dst = ((uint8_t*)s) + opt->offset;
 
         if ((opt->flags & mask) != flags)
